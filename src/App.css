@@ -3,8 +3,24 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 5vmin;
   pointer-events: none;
+}
+
+body {
+  display: block;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+  /*overflow-clip: ;*/
+}
+
+.images {
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -15,7 +31,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;

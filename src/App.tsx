@@ -1,24 +1,40 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import sampleUrls from './sample_urls.json'
 
 function App() {
+
+  const sampleImages = () => {
+    if (sampleUrls !== undefined) {
+      return sampleUrls.urls;
+    } return [];
+  };
+
+  const urls = sampleImages();
+  console.log(urls);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div>Imagenet Class Searcher</div>
+        <input/>
       </header>
+      <body>
+        <div className="image-container">
+          {sampleImages() !== undefined &&
+          sampleImages().length !== 0 &&
+          sampleImages().map((i) => (
+            <div>
+              <img
+                src={i}
+                alt="new"
+                className="images"
+                />
+            </div>
+          ))}
+        </div>
+      </body>
     </div>
   );
 }
