@@ -13,7 +13,7 @@ body {
 
 .image-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   margin: auto;
   width: 100%;
