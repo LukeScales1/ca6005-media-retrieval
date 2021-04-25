@@ -6,6 +6,8 @@ import sampleUrls from './sample_urls.json'
 
 function App() {
 
+  // axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*'
+  console.log(axios.defaults.headers)
   const sampleImages = () => {
     if (sampleUrls !== undefined) {
       return sampleUrls.urls;
@@ -16,11 +18,12 @@ function App() {
   console.log(urls);
 
   const fetchData = async () => {
-    let response = "nada";
+    let response = {data: "nada"};
     try {
       response = await axios.get(apiUrl);
+      console.log(response.data);
     } catch (exception) {
-      process.stderr.write(`ERROR: ${exception}`);
+      console.log(`ERROR: ${exception}`);
     }
     return response;
   }

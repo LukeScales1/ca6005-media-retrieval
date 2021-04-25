@@ -8,4 +8,4 @@ def handler(event, context):
     print("Event received!")
     print(event)
     return {"statusCode": 200,
-            "body": json.dumps([])}
+            "body": json.dumps(data["1"]["images"])}
