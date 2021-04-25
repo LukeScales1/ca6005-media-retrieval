@@ -35,14 +35,15 @@ function App() {
   }
 
   const fetchData = async () => {
-    let response = {class: "", long_label: "", images: []};
+    let data = {class: "", long_label: "", images: []};
     try {
-      response = await axios.get(apiUrl);
+      const response = await axios.get(apiUrl);
       console.log(response);
+      data = response.data
     } catch (exception) {
       console.log(`ERROR: ${exception}`);
     }
-    return response;
+    return data;
   }
 
   const initResponse = fetchData()
