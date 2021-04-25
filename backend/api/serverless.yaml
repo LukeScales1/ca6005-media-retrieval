@@ -1,0 +1,16 @@
+service: api
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  role: arn:aws:iam::717454133277:role/lambda_role
+  runtime: python3.7
+  region: us-east-2
+  profile: dcu
+
+functions:
+  api:
+    name: api-${opt:stage, 'dev'}
+    handler: handler.handler
+    timeout: 300
