@@ -1,5 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
+import { apiUrl } from './constants';
+import axios from 'axios';
 import './App.css';
 import sampleUrls from './sample_urls.json'
 
@@ -13,6 +14,19 @@ function App() {
 
   const urls = sampleImages();
   console.log(urls);
+
+  const fetchData = async () => {
+    let response = "nada";
+    try {
+      response = await axios.get(apiUrl);
+    } catch (exception) {
+      process.stderr.write(`ERROR: ${exception}`);
+    }
+    return response;
+  }
+
+  const initResponse = fetchData()
+  console.log(initResponse)
 
   return (
     <div className="App">
