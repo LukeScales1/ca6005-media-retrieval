@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {apiUrl} from './constants';
 import axios from 'axios';
 import './App.css';
-import sampleUrls from './results.json'
+// import sampleUrls from './results.json'
 import SearchBar from "./components/SearchBar";
 
 function App() {
@@ -15,7 +15,6 @@ function App() {
 
   const images = () => {
     if (imageData !== undefined && imageData.images?.length) {
-      console.log('data', sampleUrls)
       return imageData.images.sort(
         (a: {relevance: number;}, b: {relevance: number}) => (a.relevance) - (b.relevance));
     }
