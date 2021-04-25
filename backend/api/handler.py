@@ -7,3 +7,5 @@ with open("results.json") as f:
 def handler(event, context):
     print("Event received!")
     print(event)
+    return {"statusCode": 200,
+            "body": json.dumps([])}
