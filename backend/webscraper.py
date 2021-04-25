@@ -32,9 +32,9 @@ def get_pinterest_search_results(search, driver=None, scroll=False):
     if scroll:
         # sleep and scroll to get extra examples
         driver.execute_script("window.scrollTo(0, 5000)")
-        time.sleep(5)
+        time.sleep(2)
         driver.execute_script("window.scrollTo(0, 10000)")
-        time.sleep(5)
+        time.sleep(3)
     return BeautifulSoup(driver.page_source, "html.parser")
 
 
@@ -94,7 +94,7 @@ def encode_url(url):
 if __name__ == "__main__":
     import time
     # image_classifier = Classifier()
-    start_from = 330  # to continue scraping from a certain index if execution fails
+    start_from = 582  # to continue scraping from a certain index if execution fails
 
     labels = image_classifier.labels
     long_labels = get_yrevar_imagenet_labels()
@@ -129,11 +129,11 @@ if __name__ == "__main__":
                 "alt": div.img.get("alt"),
                 "relevance": relevance
             })
-            time.sleep(1)
+            time.sleep(0.5)
         if len([img for img in image_data if img["relevance"] < 10]) < 3:
             # try fetch some relevant images from long label
             print("No relevant results found on imagenet label - fetching more examples using yrevar's label...")
-            time.sleep(5)
+            time.sleep(1)
             page = get_pinterest_search_results(search=long_labels[i], driver=driver, scroll=True)
             img_divs = get_img_divs(page)
             if not len(img_divs):
@@ -159,7 +159,7 @@ if __name__ == "__main__":
                 if relevance_count > 10:
                     print("10 relevant images scraped from long label, let's call it a day on this one...")
                     break  # no need to get an excessive amount of relevant images
-                time.sleep(1)
+                time.sleep(0.5)
 
         results = {
             "class": label,

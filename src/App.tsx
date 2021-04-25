@@ -1,21 +1,34 @@
-import React from 'react';
-import { apiUrl } from './constants';
+import React, {useState} from 'react';
+import {apiUrl} from './constants';
 import axios from 'axios';
 import './App.css';
-import sampleUrls from './sample_urls.json'
+import sampleUrls from './results.json'
+import SearchBar from "./components/SearchBar";
 
 function App() {
 
-  // axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*'
-  console.log(axios.defaults.headers)
-  const sampleImages = () => {
-    if (sampleUrls !== undefined) {
-      return sampleUrls.urls;
-    } return [];
+  const [initialised, setInitialised] = useState(false);
+  const [imageData, setImageData] = useState({
+    images: []
+  });
+  const [query, setQuery] = useState('');
+
+  const images = () => {
+    if (imageData !== undefined && imageData.images?.length) {
+      console.log('data', sampleUrls)
+      return imageData.images.sort(
+        (a: {relevance: number;}, b: {relevance: number}) => (a.relevance) - (b.relevance));
+    }
+    return [];
   };
 
-  const urls = sampleImages();
-  console.log(urls);
+  const handleQuery = (e: any) => {
+    setQuery(e.target.value);
+  }
+
+  const handleSearch = () => {
+    console.log('search!', query)
+  }
 
   const fetchData = async () => {
     let response = {data: "nada"};
@@ -35,21 +48,71 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div>Imagenet Class Searcher</div>
-        <input/>
+        <div>
+          <SearchBar onChange={handleQuery} handleSubmit={handleSearch}/>
+          <label >
+            <input type="checkbox"/>
+            only show relevant results
+          </label>
+
+        </div>
+
+        {initialised ? (
+          <input onClick={e => setInitialised(false)}/>
+        ) : (<></>)}
       </header>
       <body>
         <div className="image-container">
-          {sampleImages() !== undefined &&
-          sampleImages().length !== 0 &&
-          sampleImages().map((i) => (
+          {images() !== undefined &&
+          images().length !== 0 ? (
+            images().map((i: {
+              href: string;
+              src: string;
+              alt: string;
+              relevance: number; }) => (
             <div>
-              <img
-                src={i}
-                alt="new"
-                className="images"
-                />
+              <div>
+                <a href={'https://www.pinterest.ca' + i.href} target="_blank">
+                  <img
+                    src={i.src}
+                    alt={i.alt}
+                    className="images"
+                  />
+                </a>
+                <span>
+                  {i.relevance === 1 ? ('Highly relevant') : (
+                    i.relevance <= 3 ? ('Relevant') : i.relevance <= 5 ? ('Somewhat relevant') : ('Irrelevant')
+                    )}
+                </span>
+              </div>
             </div>
-          ))}
+          ))
+            ) : (
+              <>
+                {initialised ? (
+                  <>
+                    <h2>Sorry! No results for this search. Please try again</h2>
+                  </>
+                ) :
+                  (
+                    <>
+                      <h2>Ever wondered what some of the ImageNet classes actually looked like?</h2>
+                      <p>Some of the classes from the ImageNet Challenge are kind of region-specific.</p>
+                      <p>For example, worm (snake) fence: these fences are
+                        specific to North America and, as an Irish native, I had never heard of these before this project!</p>
+                      <p>Are you wondering what a worm fence is too? Type that, or it's synonyms (snake fence, snake-rail fence,
+                        Virginia fence), or any of the other class names of the 1000 classes in ImageNet into the search bar
+                        below to see some examples I've scraped from Pinterest.</p>
+                      <input onClick={e => setInitialised(true)}/>
+                      <SearchBar/>
+                      <p>The results will be ordered by relevance as judged by an instance of InceptionResNetV2 - one of the
+                        leading current models for the ImageNet Challenge.</p>
+                    </>
+                  )
+                }
+              </>
+          )
+          }
         </div>
       </body>
     </div>
