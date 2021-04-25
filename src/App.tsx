@@ -12,6 +12,7 @@ function App() {
     images: []
   });
   const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const images = () => {
     if (imageData !== undefined && imageData.images?.length) {
@@ -26,15 +27,17 @@ function App() {
   }
 
   const handleSearch = async () => {
+    console.log('search!', query)
+    const data = await fetchData()
+    console.log('data post search', data);
+    setImageData(data);
     if (!initialised) {
       setInitialised(true);
     }
-    console.log('search!', query)
-    const data = await fetchData()
-    setImageData(data);
   }
 
   const fetchData = async () => {
+    setLoading(true);
     let data = {class: "", long_label: "", images: []};
     try {
       const response = await axios.get(apiUrl);
@@ -43,6 +46,7 @@ function App() {
     } catch (exception) {
       console.log(`ERROR: ${exception}`);
     }
+    setLoading(false);
     return data;
   }
 
@@ -65,6 +69,9 @@ function App() {
         ) : (<></>)}
       </header>
       <body>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
         <div className="image-container">
           {images() !== undefined &&
           images().length !== 0 ? (
@@ -116,6 +123,7 @@ function App() {
           )
           }
         </div>
+      )}
       </body>
     </div>
   );
