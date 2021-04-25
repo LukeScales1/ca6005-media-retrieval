@@ -50,9 +50,6 @@ function App() {
     return data;
   }
 
-  const initResponse = fetchData()
-  console.log(initResponse)
-
   return (
     <div className="App">
       <header className="App-header">
