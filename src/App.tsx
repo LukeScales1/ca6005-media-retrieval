@@ -26,15 +26,20 @@ function App() {
     setQuery(e.target.value);
   }
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
+    if (!initialised) {
+      setInitialised(true);
+    }
     console.log('search!', query)
+    const data = await fetchData()
+    setImageData(data);
   }
 
   const fetchData = async () => {
-    let response = {data: "nada"};
+    let response = {class: "", long_label: "", images: []};
     try {
       response = await axios.get(apiUrl);
-      console.log(response.data);
+      console.log(response);
     } catch (exception) {
       console.log(`ERROR: ${exception}`);
     }
@@ -48,17 +53,15 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div>Imagenet Class Searcher</div>
-        <div>
-          <SearchBar onChange={handleQuery} handleSubmit={handleSearch}/>
-          <label >
-            <input type="checkbox"/>
-            only show relevant results
-          </label>
-
-        </div>
 
         {initialised ? (
-          <input onClick={e => setInitialised(false)}/>
+          <div>
+            <SearchBar onChange={handleQuery} handleSubmit={() => {setInitialised(true); handleSearch();}}/>
+            <label >
+              <input type="checkbox"/>
+              only show relevant results
+            </label>
+          </div>
         ) : (<></>)}
       </header>
       <body>
@@ -103,8 +106,7 @@ function App() {
                       <p>Are you wondering what a worm fence is too? Type that, or it's synonyms (snake fence, snake-rail fence,
                         Virginia fence), or any of the other class names of the 1000 classes in ImageNet into the search bar
                         below to see some examples I've scraped from Pinterest.</p>
-                      <input onClick={e => setInitialised(true)}/>
-                      <SearchBar/>
+                      <SearchBar onChange={handleQuery} handleSubmit={handleSearch}/>
                       <p>The results will be ordered by relevance as judged by an instance of InceptionResNetV2 - one of the
                         leading current models for the ImageNet Challenge.</p>
                     </>
