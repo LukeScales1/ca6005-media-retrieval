@@ -94,7 +94,7 @@ def encode_url(url):
 if __name__ == "__main__":
     import time
     # image_classifier = Classifier()
-    start_from = 738  # to continue scraping from a certain index if execution fails
+    start_from = 761  # to continue scraping from a certain index if execution fails
 
     labels = image_classifier.labels
     long_labels = get_yrevar_imagenet_labels()
@@ -170,7 +170,7 @@ if __name__ == "__main__":
         print(f"{len(image_data)} images scraped - {relevance_count} relevant")
         store_results(i, results)
         driver.close()
-        time.sleep(10)
+        time.sleep(5)
         print("----------------")
 
 
