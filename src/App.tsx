@@ -8,16 +8,14 @@ import SearchBar from "./components/SearchBar";
 function App() {
 
   const [initialised, setInitialised] = useState(false);
-  const [imageData, setImageData] = useState({
-    images: []
-  });
+  const [imageData, setImageData] = useState([]);
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
 
   const images = () => {
     console.log('images', imageData);
-    if (imageData !== undefined && imageData.images.length) {
-      return imageData.images.sort(
+    if (imageData !== undefined && imageData.length) {
+      return imageData.sort(
         (a: {relevance: number;}, b: {relevance: number}) => (a.relevance) - (b.relevance));
     }
     return [];
@@ -40,7 +38,7 @@ function App() {
   }
 
   const fetchData = async () => {
-    let data = {class: "", long_label: "", images: []};
+    let data = [];
     try {
       const response = await axios.get(apiUrl);
       console.log(response);
