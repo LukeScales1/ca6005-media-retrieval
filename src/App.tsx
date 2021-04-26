@@ -15,7 +15,8 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   const images = () => {
-    if (imageData !== undefined && imageData.images?.length) {
+    console.log('images', imageData);
+    if (imageData !== undefined && imageData.images.length) {
       return imageData.images.sort(
         (a: {relevance: number;}, b: {relevance: number}) => (a.relevance) - (b.relevance));
     }
