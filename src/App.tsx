@@ -27,6 +27,7 @@ function App() {
   }
 
   const handleSearch = async () => {
+    setLoading(true);
     console.log('search!', query)
     const data = await fetchData()
     console.log('data post search', data);
@@ -34,10 +35,10 @@ function App() {
     if (!initialised) {
       setInitialised(true);
     }
+    setLoading(false);
   }
 
   const fetchData = async () => {
-    setLoading(true);
     let data = {class: "", long_label: "", images: []};
     try {
       const response = await axios.get(apiUrl);
@@ -46,7 +47,6 @@ function App() {
     } catch (exception) {
       console.log(`ERROR: ${exception}`);
     }
-    setLoading(false);
     return data;
   }
 
