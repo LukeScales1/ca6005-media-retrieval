@@ -1,4 +1,5 @@
 import json
+import time
 
 import selenium
 import urllib.parse
@@ -67,9 +68,19 @@ def get_text_and_tags(parsed_page: BeautifulSoup):
     tags = parsed_page.findAll("a", {"class": "vaseCarousel_vaseTagLink"})
     h1 = parsed_page.findAll("h1")
     h2 = parsed_page.findAll("h2")
+    try:
+        h1_text = h1[0].get_text()
+    except IndexError:
+        h1_text = ""
+
+    try:
+        h2_text = h2[1].get_text()
+    except IndexError:
+        h2_text = ""
+
     return {
-        "h1": h1[0].get_text(),
-        "h2": h2[1].get_text(),
+        "h1": h1_text,
+        "h2": h2_text,
         "tags": [tag.get_text() for tag in tags]
     }
 
@@ -94,7 +105,7 @@ def encode_url(url):
 if __name__ == "__main__":
     import time
     # image_classifier = Classifier()
-    start_from = 761  # to continue scraping from a certain index if execution fails
+    start_from = 974  # to continue scraping from a certain index if execution fails
 
     labels = image_classifier.labels
     long_labels = get_yrevar_imagenet_labels()

@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, KeyboardEvent} from 'react';
 import {apiUrl} from './constants';
 import axios from 'axios';
 import './App.css';
 // import sampleUrls from './results.json'
 import SearchBar from "./components/SearchBar";
+import imagenetClasses from './imagenetClasses.json'
+import {findRenderedComponentWithType} from "react-dom/test-utils";
 
 function App() {
 
@@ -11,6 +13,17 @@ function App() {
   const [imageData, setImageData] = useState([]);
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
+  // const [autocompleteList, setAutocompleteList] = useState([]);
+  const [searchType, setSearchType] = useState('classes');
+
+  const autocompleteList = () => {
+    if (searchType === 'classes') {
+      if (imagenetClasses !== undefined) {
+        return Object.keys(imagenetClasses);
+      }
+    }
+    return [];
+  }
 
   const images = () => {
     console.log('images', imageData);
@@ -53,6 +66,13 @@ function App() {
     return data;
   }
 
+  const checkKeyPress = (e: any) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  }
+  document.addEventListener("keydown", checkKeyPress);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -60,7 +80,7 @@ function App() {
 
         {initialised ? (
           <div>
-            <SearchBar onChange={handleQuery} handleSubmit={() => {setInitialised(true); handleSearch();}}/>
+            <SearchBar list={autocompleteList()} onChange={handleQuery} handleSubmit={() => {setInitialised(true); handleSearch();}}/>
             <label >
               <input type="checkbox"/>
               only show relevant results
@@ -113,7 +133,7 @@ function App() {
                       <p>Are you wondering what a worm fence is too? Type that, or it's synonyms (snake fence, snake-rail fence,
                         Virginia fence), or any of the other class names of the 1000 classes in ImageNet into the search bar
                         below to see some examples I've scraped from Pinterest.</p>
-                      <SearchBar onChange={handleQuery} handleSubmit={handleSearch}/>
+                      <SearchBar list={autocompleteList()} onChange={handleQuery} handleSubmit={handleSearch}/>
                       <p>The results will be ordered by relevance as judged by an instance of InceptionResNetV2 - one of the
                         leading current models for the ImageNet Challenge.</p>
                     </>

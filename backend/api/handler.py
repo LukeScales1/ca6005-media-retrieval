@@ -1,14 +1,25 @@
 import json
 
-with open("results.json") as f:
+
+with open("data/results.json") as f:
     data = json.load(f)
+
+with open("data/imagenet_class_index.json") as f:
+    imagenet_class_index = json.load(f)
 
 
 def handler(event, context):
     print("Event received!")
     print(event)
+    response = []
     if event['queryStringParameters']:
         print(event['queryStringParameters'])
+        query = event['queryStringParameters']["q"]
+        if query in imagenet_class_index.keys():
+            print(imagenet_class_index[query])
+            print(type(imagenet_class_index[query]))
+            response = data[str(imagenet_class_index[query])]["images"]
+
     return {"statusCode": 200,
             "headers": {
                 "Access-Control-Allow-Headers": "Content-Type",
@@ -16,4 +27,4 @@ def handler(event, context):
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
                 "Content-Type": "application/json"
             },
-            "body": json.dumps(data["1"]["images"])}
+            "body": json.dumps(response)}
