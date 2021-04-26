@@ -40,7 +40,11 @@ function App() {
   const fetchData = async () => {
     let data = [];
     try {
-      const response = await axios.get(`${apiUrl}/?q=${query}`);
+      const response = await axios.get(apiUrl, {
+        params: {
+          q: query
+        }
+      });
       console.log(response);
       data = response.data
     } catch (exception) {

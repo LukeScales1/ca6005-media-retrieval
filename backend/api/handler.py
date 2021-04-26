@@ -7,6 +7,8 @@ with open("results.json") as f:
 def handler(event, context):
     print("Event received!")
     print(event)
+    if event['queryStringParameters']:
+        print(event['queryStringParameters'])
     return {"statusCode": 200,
             "headers": {
                 "Access-Control-Allow-Headers": "Content-Type",
