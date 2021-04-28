@@ -35,7 +35,9 @@ function App() {
   };
 
   const handleQuery = (e: any) => {
+    console.log("set query", e.target);
     setQuery(e.target.value);
+    console.log("query post set:", query);
   }
 
   const handleSearch = async () => {

@@ -10,7 +10,7 @@ const SearchBar = (props) => (
     {/*>*/}
     {/*</input>*/}
     <Autocomplete
-      suggestions={props.list} onSubmit={props.handleSubmit}
+      suggestions={props.list} onChange={props.onChange} onSubmit={props.handleSubmit}
     />
     {/*<input type="submit" value="Search" onClick={props.handleSubmit} />*/}
   </div>
