@@ -31,7 +31,7 @@ def get_image_array(index):
 
 if __name__ == "__main__":
     # image_classifier = Classifier()
-    start_from = 17  # to continue scraping from a certain index if execution fails
+    start_from = 270  # to continue scraping from a certain index if execution fails
     img_start = False  # to continue scraping from certain image in class if execution fails
     # img_start = False
     labels = image_classifier.labels
@@ -45,7 +45,8 @@ if __name__ == "__main__":
             if img_start is not False:
                 if img_idx < img_start:
                     continue
-            if img["relevance"] == 10:
+            if img["relevance"] > 1:
+                # Update: took 12 hrs to scrape 238 classes worth of relevance < 10, only scraping matches e.g rel = 1
                 # webscraper_test.ipynb shows we have 43501 images in total so only scraping text from relevant entries
                 continue
             driver = webdriver.Chrome(options=options)
