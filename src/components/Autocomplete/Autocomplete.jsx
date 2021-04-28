@@ -41,6 +41,7 @@ class Autocomplete extends Component {
       showSuggestions: true,
       userInput: e.currentTarget.value
     });
+    this.props.onUpdate(userInput);
   };
 
   onClick = e => {
@@ -50,6 +51,7 @@ class Autocomplete extends Component {
       showSuggestions: false,
       userInput: e.currentTarget.innerText
     });
+    this.props.onUpdate(e.currentTarget.innerText);
   };
 
   onKeyDown = e => {
