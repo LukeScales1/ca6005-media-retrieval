@@ -55,7 +55,8 @@ function App() {
     try {
       const response = await axios.get(apiUrl, {
         params: {
-          q: query
+          q: query,
+          search: searchType
         }
       });
       console.log(response);

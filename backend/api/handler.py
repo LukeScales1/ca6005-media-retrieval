@@ -8,6 +8,13 @@ with open("data/imagenet_class_index.json") as f:
     imagenet_class_index = json.load(f)
 
 
+def format_response(message, data):
+    return {
+        "message": message,
+        "data": data
+    }
+
+
 def handler(event, context):
     print("Event received!")
     print(event)
@@ -15,10 +22,14 @@ def handler(event, context):
     if event['queryStringParameters']:
         print(event['queryStringParameters'])
         query = event['queryStringParameters']["q"]
-        if query in imagenet_class_index.keys():
-            print(imagenet_class_index[query])
-            print(type(imagenet_class_index[query]))
-            response = data[str(imagenet_class_index[query])]["images"]
+        search_type = event['queryStringParameters']["search"]
+        if search_type == "classes":
+            if query in imagenet_class_index.keys():
+                print(imagenet_class_index[query])
+                print(type(imagenet_class_index[query]))
+                response = format_response(message="", data=data[str(imagenet_class_index[query])]["images"])
+        elif search_type == "tags":
+            response = format_response(message="TAG SEARCH", data=[])
 
     return {"statusCode": 200,
             "headers": {
