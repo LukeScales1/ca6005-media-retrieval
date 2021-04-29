@@ -47,6 +47,7 @@ function App() {
   const handleSearch = async () => {
     if (loading) return;
     setLoading(true);
+    setImageData([]);  // wipe on new search
     console.log('search!', query)
     const data = await fetchData()
     console.log('data post search', data);
