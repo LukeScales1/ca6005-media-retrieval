@@ -27,13 +27,13 @@ function App() {
     return [];
   }
 
-  const images = () => {
-    console.log('images', imageData);
-    if (imageData !== undefined && imageData.length) {
-      return imageData.sort(
-        (a: {relevance: number;}, b: {relevance: number}) => (a.relevance) - (b.relevance));
+  const sortImageData = (data: []) => {
+    console.log('images', data);
+    if (data !== undefined && data.length) {
+       setImageData(data.sort(
+        (a: {relevance: number;}, b: {relevance: number}) => (a.relevance) - (b.relevance)));
     }
-    return [];
+    return setImageData([]);
   };
 
   const handleQuery = (e: string) => {
@@ -43,11 +43,12 @@ function App() {
   }
 
   const handleSearch = async () => {
+    if (loading) return;
     setLoading(true);
     console.log('search!', query)
     const data = await fetchData()
     console.log('data post search', data);
-    setImageData(data);
+    sortImageData(data);
     if (!initialised) {
       setInitialised(true);
     }
@@ -108,9 +109,9 @@ function App() {
         <div>Loading...</div>
       ) : (
         <div className="image-container">
-          {images() !== undefined &&
-          images().length !== 0 ? (
-            images().map((i: {
+          {imageData !== undefined &&
+          imageData.length !== 0 ? (
+            imageData.map((i: {
               class: any;
               href: string;
               src: string;
