@@ -2,8 +2,10 @@ import re
 import json
 import pickle
 
+import numpy
 
-with open("data/results.p") as f:
+
+with open("data/results.p", "rb") as f:
     data = pickle.load(f)
 
 with open("data/imagenet_class_index.json") as f:

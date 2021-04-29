@@ -111,6 +111,7 @@ function App() {
           {images() !== undefined &&
           images().length !== 0 ? (
             images().map((i: {
+              class: any;
               href: string;
               src: string;
               alt: string;
@@ -125,9 +126,14 @@ function App() {
                   />
                 </a>
                 <span>
-                  {i.relevance === 1 ? ('Highly relevant') : (
-                    i.relevance <= 3 ? ('Relevant') : i.relevance <= 5 ? ('Somewhat relevant') : ('Irrelevant')
-                    )}
+                  {searchType === 'classes' ? (
+                    i.relevance === 1 ? ('Highly relevant') : (
+                    i.relevance <= 3 ? ('Relevant') : i.relevance <= 5 ? ('Somewhat relevant') : i.relevance < 10 ?
+                      ('Slightly relevant') : ('Irrelevant')
+                    )
+                  ) : (
+                    i.class
+                  )}
                 </span>
               </div>
             </div>
