@@ -5,7 +5,7 @@ import './App.css';
 // import sampleUrls from './results.json'
 import SearchBar from "./components/SearchBar";
 import imagenetClasses from './imagenetClasses.json'
-import {findRenderedComponentWithType} from "react-dom/test-utils";
+import tagSuggestions from './tagLabels.json'
 
 function App() {
 
@@ -19,8 +19,10 @@ function App() {
   const autocompleteList = () => {
     if (searchType === 'classes') {
       if (imagenetClasses !== undefined) {
-        return Object.keys(imagenetClasses);
+        return imagenetClasses;
       }
+    } else if (searchType === 'tags') {
+      return tagSuggestions;
     }
     return [];
   }
