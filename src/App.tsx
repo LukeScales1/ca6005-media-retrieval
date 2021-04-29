@@ -62,7 +62,7 @@ function App() {
         }
       });
       console.log(response);
-      data = response.data
+      data = response.data.images;
     } catch (exception) {
       console.log(`ERROR: ${exception}`);
     }

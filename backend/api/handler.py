@@ -1,17 +1,18 @@
 import json
+import pickle
 
 
-with open("data/results.json") as f:
-    data = json.load(f)
+with open("data/results.p") as f:
+    data = pickle.load(f)
 
 with open("data/imagenet_class_index.json") as f:
     imagenet_class_index = json.load(f)
 
 
-def format_response(message, data):
+def format_response(message, images):
     return {
         "message": message,
-        "data": data
+        "images": images
     }
 
 
@@ -27,9 +28,9 @@ def handler(event, context):
             if query in imagenet_class_index.keys():
                 print(imagenet_class_index[query])
                 print(type(imagenet_class_index[query]))
-                response = format_response(message="", data=data[str(imagenet_class_index[query])]["images"])
+                response = format_response(message="", images=data[str(imagenet_class_index[query])]["images"])
         elif search_type == "tags":
-            response = format_response(message="TAG SEARCH", data=[])
+            response = format_response(message="TAG SEARCH", images=[])
 
     return {"statusCode": 200,
             "headers": {
