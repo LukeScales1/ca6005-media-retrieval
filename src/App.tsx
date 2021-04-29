@@ -69,6 +69,11 @@ function App() {
     return data;
   }
 
+  const updateSearchType = (e: any) => {
+    console.log(e);
+    setSearchType(e.target.value);
+  }
+
   const checkKeyPress = (e: any) => {
     if (e.key === 'Enter') {
       handleSearch();
@@ -83,7 +88,12 @@ function App() {
 
         {initialised ? (
           <div>
-            <SearchBar list={autocompleteList()} onChange={(e: string) => handleQuery(e)} handleSubmit={() => {setInitialised(true); handleSearch();}}/>
+            <SearchBar
+              list={autocompleteList()}
+              searchType={searchType}
+              onChange={(e: string) => handleQuery(e)}
+              onSearchTypeUpdate={updateSearchType}
+              handleSubmit={() => {setInitialised(true); handleSearch();}}/>
             <label >
               <input type="checkbox"/>
               only show relevant results
@@ -136,7 +146,13 @@ function App() {
                       <p>Are you wondering what a worm fence is too? Type that, or it's synonyms (snake fence, snake-rail fence,
                         Virginia fence), or any of the other class names of the 1000 classes in ImageNet into the search bar
                         below to see some examples I've scraped from Pinterest.</p>
-                      <SearchBar list={autocompleteList()} onChange={(e: string) => handleQuery(e)} handleSubmit={handleSearch}/>
+                      <SearchBar
+                        list={autocompleteList()}
+                        searchType={searchType}
+                        onChange={(e: string) => handleQuery(e)}
+                        onSearchTypeUpdate={updateSearchType}
+                        handleSubmit={handleSearch}
+                      />
                       <p>The results will be ordered by relevance as judged by an instance of InceptionResNetV2 - one of the
                         leading current models for the ImageNet Challenge.</p>
                     </>

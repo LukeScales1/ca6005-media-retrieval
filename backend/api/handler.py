@@ -25,7 +25,7 @@ def preprocess_text(text):
 def handler(event, context):
     print("Event received!")
     print(event)
-    response = []
+    response = format_response("", [])
     if event['queryStringParameters']:
         print(event['queryStringParameters'])
         query = event['queryStringParameters']["q"]
@@ -37,7 +37,10 @@ def handler(event, context):
                 print(type(imagenet_class_index[query]))
                 response = format_response(message="", images=data[str(imagenet_class_index[query])]["images"])
         elif search_type == "tags":
-            response = format_response(message="TAG SEARCH", images=[])
+            with open("data/inverted_tag_index_loaded_postings_v2.p", "rb") as fl:
+                tags = pickle.load(fl)
+            if query in tags:
+                response = format_response(message="TAG SEARCH", images=tags[query])
 
     return {"statusCode": 200,
             "headers": {
