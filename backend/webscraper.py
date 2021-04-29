@@ -21,7 +21,10 @@ def get_yrevar_imagenet_labels():
     yrevar_labels = []
     for line in file:
         decoded_line = line.decode("utf-8")
-        yrevar_labels.append(decoded_line.split("'")[1])
+        if '"' in decoded_line:
+            yrevar_labels.append(decoded_line.split('"')[1])
+        else:
+            yrevar_labels.append(decoded_line.split("'")[1])
     return yrevar_labels
 
 

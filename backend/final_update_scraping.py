@@ -60,7 +60,6 @@ if __name__ == "__main__":
         "eft": "eft newt",
         "kite": "kite hawk",
         "water ouzel": "dipper bird",
-
     }
     image_classifier.labels = image_classifier.fetch_labels(labels_to_fix=updated_labels)
     for i in no_matches:

@@ -5,10 +5,43 @@ import tensorflow as tf
 from tensorflow.keras.applications import InceptionResNetV2
 from tensorflow.keras.applications.inception_resnet_v2 import preprocess_input
 
-
 IMAGENET_LABELS = {
     "filename": "ImageNetLabels.txt",
     "url": "https://storage.googleapis.com/download.tensorflow.org/data/ImageNetLabels.txt"
+}
+
+LABEL_UPDATES = {
+    "cock": "cockerel",
+    "drake": "drake duck",
+    "ear": "corn cob",
+    "wing": "jet wing",
+    "trailer truck": "semi truck",
+    "toyshop": "toy store",
+    "stretcher": "emergency stretcher",
+    "space bar": "spacebar keyboard",
+    "pop bottle": "glass soda pop bottle",
+    "photocopier": "office scanner printer",
+    "oxcart": "ox cart",
+    "nail": "galvanized nail",
+    "horizontal bar": "gymnast horizontal bar",
+    "grille": "car grill",
+    "drumstick": "drum stick",
+    "cash machine": "atm machine",
+    "bow": "bow weapon",
+    "gar": "gar fish",
+    "coho": "coho salmon fishing",
+    "admiral": "admiral butterfly",
+    "cricket": "cricket bug",
+    "redbone": "redbone dog",
+    "conch": "conch shell",
+    "black widow": "black widow spider",
+    "garden spider": "araneus diadematus",
+    "sidewinder": "horned rattlesnake",
+    "night snake": "Hypsiglena torquata",
+    "thunder snake": "Carphophis amoenus",
+    "eft": "eft newt",
+    "kite": "kite hawk",
+    "water ouzel": "dipper bird",
 }
 
 
@@ -16,7 +49,7 @@ class Classifier:
     def __init__(self):
         self.model = InceptionResNetV2(weights='imagenet', input_shape=(299, 299, 3))
         self.img_dims = (299, 299)
-        self.labels = self.fetch_labels(labels_to_fix={"cock": "cockerel", "drake": "drake duck"})
+        self.labels = self.fetch_labels(labels_to_fix=LABEL_UPDATES)
 
     @staticmethod
     def fetch_labels(labels_to_fix: dict = None):

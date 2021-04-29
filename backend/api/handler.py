@@ -1,3 +1,4 @@
+import re
 import json
 import pickle
 
@@ -16,6 +17,11 @@ def format_response(message, images):
     }
 
 
+def preprocess_text(text):
+    text = re.sub("[-$%@#/?!.,()0-9]", "", text).lower()
+    return text.replace("  ", " ")
+
+
 def handler(event, context):
     print("Event received!")
     print(event)
@@ -24,6 +30,7 @@ def handler(event, context):
         print(event['queryStringParameters'])
         query = event['queryStringParameters']["q"]
         search_type = event['queryStringParameters']["search"]
+        query = preprocess_text(query)
         if search_type == "classes":
             if query in imagenet_class_index.keys():
                 print(imagenet_class_index[query])
