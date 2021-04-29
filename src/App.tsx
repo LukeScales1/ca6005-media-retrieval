@@ -32,8 +32,10 @@ function App() {
     if (data !== undefined && data.length) {
        setImageData(data.sort(
         (a: {relevance: number;}, b: {relevance: number}) => (a.relevance) - (b.relevance)));
+    } else {
+       setImageData([]);
     }
-    return setImageData([]);
+    // return [];
   };
 
   const handleQuery = (e: string) => {
