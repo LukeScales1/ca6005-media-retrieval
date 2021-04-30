@@ -59,7 +59,6 @@ function App() {
     if (!initialised) {
       setInitialised(true);
     }
-    setLoading(false);
   }
 
   const fetchData = async () => {
@@ -77,6 +76,7 @@ function App() {
       console.log(`ERROR: ${exception}`);
     }
     queryText = '';
+    setLoading(false);
     return data;
   }
 
