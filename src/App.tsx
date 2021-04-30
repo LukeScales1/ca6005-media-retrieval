@@ -49,10 +49,11 @@ function App() {
 
   const handleSearch = async () => {
     if (loading) return;
+    if (queryText === '') return;
     setLoading(true);
     setImageData([]);  // wipe on new search
     console.log('search!', queryText)
-    const data = await fetchData()
+    const data = await fetchData();
     console.log('data post search', data);
     sortImageData(data);
     if (!initialised) {
@@ -75,6 +76,7 @@ function App() {
     } catch (exception) {
       console.log(`ERROR: ${exception}`);
     }
+    queryText = '';
     return data;
   }
 
@@ -86,7 +88,8 @@ function App() {
   const checkKeyPress = (e: any) => {
     if (e.key === 'Enter') {
       if (!loading) {
-        handleSearch();
+        console.log("Main Enter keypress, searching");
+        handleSearch().then();
       }
     }
   }
