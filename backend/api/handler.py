@@ -8,8 +8,8 @@ import numpy
 with open("data/results.p", "rb") as f:
     data = pickle.load(f)
 
-with open("data/imagenet_class_index.json") as f:
-    imagenet_class_index = json.load(f)
+with open("data/imagenet_class_index.p", "rb") as f:
+    imagenet_class_index = pickle.load(f)
 
 
 def format_response(message, images):
@@ -27,7 +27,7 @@ def preprocess_text(text):
 def handler(event, context):
     print("Event received!")
     print(event)
-    response = format_response("", [])
+    response = format_response("No results", [])
     if event['queryStringParameters']:
         print(event['queryStringParameters'])
         query = event['queryStringParameters']["q"]
@@ -38,11 +38,17 @@ def handler(event, context):
                 print(imagenet_class_index[query])
                 print(type(imagenet_class_index[query]))
                 response = format_response(message="", images=data[str(imagenet_class_index[query])]["images"])
+            else:
+                response = format_response(
+                    f"No matches for class {event['queryStringParameters']['q']} in class index!", [])
         elif search_type == "tags":
             with open("data/inverted_tag_index_loaded_postings_v2.p", "rb") as fl:
                 tags = pickle.load(fl)
             if query in tags:
                 response = format_response(message="TAG SEARCH", images=tags[query])
+            else:
+                response = format_response(
+                    f"No matches for class {event['queryStringParameters']['q']} in tags index!", [])
 
     return {"statusCode": 200,
             "headers": {

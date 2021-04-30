@@ -85,7 +85,9 @@ function App() {
 
   const checkKeyPress = (e: any) => {
     if (e.key === 'Enter') {
-      handleSearch();
+      if (!loading) {
+        handleSearch();
+      }
     }
   }
   document.addEventListener("keydown", checkKeyPress);

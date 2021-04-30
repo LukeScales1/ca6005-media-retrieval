@@ -28,6 +28,8 @@ class Autocomplete extends Component {
   onChange = e => {
     const { suggestions } = this.props;
     const userInput = e.currentTarget.value;
+    console.log("Autocomplete.onChange userInput", userInput)
+
 
     // Filter our suggestions that don't contain the user's input
     const filteredSuggestions = suggestions.filter(
@@ -59,6 +61,7 @@ class Autocomplete extends Component {
 
     // User pressed the enter key
     if (e.keyCode === 13) {
+      console.log("Autocomplete.onKeyDown Enter:", filteredSuggestions[activeSuggestion])
       this.props.onUpdate(filteredSuggestions[activeSuggestion]);
       this.setState({
         activeSuggestion: 0,
