@@ -38,17 +38,20 @@ function App() {
     // return [];
   };
 
+  let queryText = '';
+
   const handleQuery = (e: string) => {
     console.log("set query", e);
-    setQuery(e);
-    console.log("query post set:", query);
+    queryText = e;
+    // setQuery(e);
+    console.log("queryText post set:", queryText);
   }
 
   const handleSearch = async () => {
     if (loading) return;
     setLoading(true);
     setImageData([]);  // wipe on new search
-    console.log('search!', query)
+    console.log('search!', queryText)
     const data = await fetchData()
     console.log('data post search', data);
     sortImageData(data);
@@ -63,7 +66,7 @@ function App() {
     try {
       const response = await axios.get(apiUrl, {
         params: {
-          q: query,
+          q: queryText,
           search: searchType
         }
       });
