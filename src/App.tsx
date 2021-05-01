@@ -108,10 +108,10 @@ function App() {
               onChange={(e: string) => handleQuery(e)}
               onSearchTypeUpdate={updateSearchType}
               handleSubmit={() => {setInitialised(true); handleSearch();}}/>
-            <label >
-              <input type="checkbox"/>
-              only show relevant results
-            </label>
+            {/*<label >*/}
+            {/*  <input type="checkbox"/>*/}
+            {/*  only show relevant results*/}
+            {/*</label>*/}
           </div>
         ) : (<></>)}
       </header>
